@@ -25,3 +25,10 @@ The Azure Load Balancer plays a pivotal role in the infrastructure:
 
 - **Traffic Distribution:** Equitably distributing incoming web requests across all healthy VM instances within the Virtual Machine Scale Set. This load balancing ensures optimal utilization of resources and enhances the website's responsiveness.
 - **Health Probes:** Continuously monitoring the health and availability of individual VM instances. Unhealthy instances are automatically excluded from receiving traffic until they are restored to a healthy state.
+
+### Terraform Deployment
+
+The infrastructure setup can be orchestrated using Terraform, an infrastructure as code tool:
+
+- **Infrastructure as Code:** Utilize Terraform configurations (included in the repository) to define Azure resources, VMSS, Load Balancer, and associated configurations.
+- **Deployment Automation:** Terraform allows for reproducible and automated infrastructure deployment, ensuring consistency across environments.
