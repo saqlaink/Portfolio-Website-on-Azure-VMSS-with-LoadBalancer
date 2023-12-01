@@ -1,29 +1,27 @@
 # Portfolio Website on Azure VMSS with Load Balancer
 
-This project showcases the deployment of a portfolio website on an Azure Virtual Machine Scale Set (VMSS) with a Load Balancer, ensuring scalability, high availability, and efficient distribution of incoming traffic.
-
 ## Project Overview
 
 ### Objectives
 
-The primary objective of this project is to deploy a resilient infrastructure on Azure for hosting a portfolio website. Key features include:
+This project aims to create a robust and scalable infrastructure on Microsoft Azure to host a dynamic portfolio website. The primary objectives include:
 
-- **Azure VMSS Setup:** Utilizing Virtual Machine Scale Sets for automatic scaling of VM instances based on demand.
-- **Load Balancer Configuration:** Distributing incoming web traffic across multiple VM instances for improved performance and redundancy.
-- **High Availability:** Ensuring continuous availability of the website by distributing traffic among healthy VM instances.
+- **Azure VMSS Setup:** Utilizing Azure Virtual Machine Scale Sets to automate the scaling of VM instances based on fluctuating demand. This ensures the website can handle varying levels of traffic efficiently without manual intervention.
+- **Load Balancer Configuration:** Implementing an Azure Load Balancer to evenly distribute incoming web traffic among multiple VM instances. This ensures optimal performance, resilience against traffic spikes, and redundancy in case of instance failures.
+- **High Availability:** Ensuring the website remains continuously accessible by effectively distributing traffic among healthy VM instances. This minimizes downtime and enhances the overall reliability of the deployed portfolio website.
 
 ### Components
 
 #### Azure VMSS
 
-The deployment utilizes VMSS to manage a set of identical VMs:
+The project relies on Azure Virtual Machine Scale Sets for managing and scaling a group of identical VMs:
 
-- **Scaling:** Configuring auto-scaling rules based on metrics like CPU utilization or incoming traffic.
-- **Customization:** Defining VM specifications, OS configurations, and other necessary resources.
+- **Dynamic Scaling:** Configuring auto-scaling rules based on key metrics like CPU utilization or incoming traffic patterns. This allows the infrastructure to adapt to changing workloads, automatically scaling up or down as needed.
+- **Customization:** Defining specific VM specifications such as CPU, memory, disk, and OS configurations. This enables the creation of standardized instances tailored for hosting the portfolio website.
 
 #### Azure Load Balancer
 
-The Load Balancer helps evenly distribute incoming network traffic:
+The Azure Load Balancer plays a pivotal role in the infrastructure:
 
-- **Traffic Distribution:** Distributing incoming requests across healthy VM instances within the VMSS.
-- **Health Probes:** Monitoring the health of VMs and directing traffic only to healthy instances.
+- **Traffic Distribution:** Equitably distributing incoming web requests across all healthy VM instances within the Virtual Machine Scale Set. This load balancing ensures optimal utilization of resources and enhances the website's responsiveness.
+- **Health Probes:** Continuously monitoring the health and availability of individual VM instances. Unhealthy instances are automatically excluded from receiving traffic until they are restored to a healthy state.
