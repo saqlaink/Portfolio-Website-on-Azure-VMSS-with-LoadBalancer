@@ -69,53 +69,89 @@ resource "azurerm_lb_rule" "lbnatrule" {
   probe_id                       = azurerm_lb_probe.vmss.id
 }
 
-resource "azurerm_virtual_machine_scale_set" "vmss" {
+# resource "azurerm_virtual_machine_scale_set" "vmss" {
+#   name                = var.azurerm_virtual_machine_scale_set
+#   location            = var.location
+#   resource_group_name = azurerm_resource_group.vmss.name
+#   upgrade_policy_mode = "Manual"
+
+#   zones = local.zones
+
+#   sku {
+#     name     = "Standard_B1S"
+#     tier     = "Standard"
+#     capacity = 2
+#   }
+
+#   storage_profile_image_reference {
+#     publisher = "Canonical"
+#     offer     = "0001-com-ubuntu-server-jammy"
+#     sku       = "22_04-lts"
+#     version   = "latest"
+#   }
+
+#   storage_profile_os_disk {
+#     name              = ""
+#     caching           = "ReadWrite"
+#     create_option     = "FromImage"
+#     managed_disk_type = "Standard_LRS"
+#   }
+
+#   storage_profile_data_disk {
+#     lun           = 0
+#     caching       = "ReadWrite"
+#     create_option = "Empty"
+#     disk_size_gb  = 10
+#   }
+
+#   os_profile {
+#     computer_name_prefix = "vmlab"
+#     admin_username       = var.admin_user
+#     admin_password       = var.admin_password
+#     custom_data          = file("web.conf")
+#   }
+
+#   os_profile_linux_config {
+#     disable_password_authentication = false
+#   }
+
+#   network_profile {
+#     name    = "terraformnetworkprofile"
+#     primary = true
+
+#     ip_configuration {
+#       name                                   = "IPConfiguration"
+#       primary                                = true
+#       subnet_id                              = azurerm_subnet.vmss.id
+#       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bpepoll.id]
+#     }
+#   }
+#   tags = var.tags
+# }
+
+resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   name                = var.azurerm_virtual_machine_scale_set
-  location            = var.location
   resource_group_name = azurerm_resource_group.vmss.name
-  upgrade_policy_mode = "Manual"
+  location            = var.location
+  sku                 = "Standard_B1S"
+  instances           = 2
+  admin_username      = var.admin_user
+  admin_password      = var.admin_password
+  tags                = var.tags
 
-  zones = local.zones
-
-  sku {
-    name     = "Standard_B1S"
-    tier     = "Standard"
-    capacity = 2
-  }
-
-  storage_profile_image_reference {
+  source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
     sku       = "22_04-lts"
     version   = "latest"
   }
 
-  storage_profile_os_disk {
-    name              = ""
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+  os_disk {
+    storage_account_type = "Standard_LRS"
+    caching              = "ReadWrite"
   }
 
-  storage_profile_data_disk {
-    lun           = 0
-    caching       = "ReadWrite"
-    create_option = "Empty"
-    disk_size_gb  = 10
-  }
-
-  os_profile {
-    computer_name_prefix = "vmlab"
-    admin_username       = var.admin_user
-    admin_password       = var.admin_password
-    custom_data          = file("web.conf")
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-
-  network_profile {
+  network_interface {
     name    = "terraformnetworkprofile"
     primary = true
 
@@ -126,8 +162,8 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bpepoll.id]
     }
   }
-  tags = var.tags
 }
+
 
 /*
 resource "azurerm_virtual_machine_scale_set_extension" "example" {
